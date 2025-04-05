@@ -15,12 +15,13 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use("/api/emails", emailRoutes);
+app.use("/api/v1", emailRoutes);
 
 mongoose.set("strictQuery", true); 
 
 mongoose
-  .connect(process.env.MONGO_URI, {
+  mongoose
+  .connect(process.env.DATABASE_LINK, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })

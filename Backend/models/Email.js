@@ -3,11 +3,12 @@ import mongoose from "mongoose";
 
 const emailSchema = mongoose.Schema(
   {
-    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     from: { type: String, required: true },
     to: { type: String, required: true },
     subject: { type: String },
     body: { type: String },
+    gmailId: { type: String, unique: true },
     aiGeneratedReply: { type: String },
     metadata: {
       tone: { type: String },
