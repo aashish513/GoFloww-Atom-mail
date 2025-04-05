@@ -3,7 +3,8 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
-
+import cookieParser from "cookie-parser";
+import authRoutes from "./routes/auth.js"
 import emailRoutes from "./routes/emailRoutes.js";
 
 dotenv.config();
@@ -11,10 +12,17 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-app.use(cors());
-app.use(express.json());
+app.use(
+  cors({
+    origin: "http://localhost:3000", // frontend origin
+    credentials: true,
+  })
+);
 
-// Routes
+app.use(express.json());
+app.use(cookieParser());
+
+app.use("/api/v1", authRoutes);
 app.use("/api/v1", emailRoutes);
 
 mongoose.set("strictQuery", true); 

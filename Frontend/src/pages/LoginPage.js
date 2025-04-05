@@ -15,19 +15,40 @@ function LoginPage() {
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     try {
-      setError("")
-      setLoading(true)
-      await login(email, password)
-      navigate("/dashboard")
+      setError("");
+      setLoading(true);
+
+      const response = await fetch(
+        "http://192.168.137.92:5001/api/login_email",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Invalid credentials");
+      }
+
+      const data = await response.json();
+      const token = data.secret_key;
+     navigate("/dashboard");
+    console.log("token aa gaya", token);
+    localStorage.setItem("token", token);
+
+
+      // Navigate to dashboard
     } catch (error) {
-      setError("Failed to sign in. Please check your credentials.")
+      console.error(error);
+      setError("Failed to sign in. Please check your credentials.");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -106,17 +127,7 @@ function LoginPage() {
             </div>
 
             <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <input
-                  id="remember-me"
-                  name="remember-me"
-                  type="checkbox"
-                  className="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
-                />
-                <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
-                  Remember me
-                </label>
-              </div>
+              
 
               <div className="text-sm">
                 <a href="#" className="font-medium text-purple-600 hover:text-purple-500">

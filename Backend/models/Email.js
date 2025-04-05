@@ -22,5 +22,5 @@ const emailSchema = mongoose.Schema(
 );
 
 const Email = mongoose.model("Email", emailSchema);
-
+ 
 export default Email;

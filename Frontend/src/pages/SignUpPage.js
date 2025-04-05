@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { useAuth } from "../contexts/AuthContext"
 import Navbar from "../components/Navbar"
 import { Mail, Lock, User, AlertCircle } from "lucide-react"
+import { signup as signupRequest } from "../api/auth"; // ✅ Renamed to avoid conflict
 
 function SignUpPage() {
   const [name, setName] = useState("")
@@ -16,24 +17,35 @@ function SignUpPage() {
   const { signup } = useAuth()
   const navigate = useNavigate()
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
 
-    if (password !== confirmPassword) {
-      return setError("Passwords do not match")
-    }
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    try {
-      setError("")
-      setLoading(true)
-      await signup(email, password, name)
-      navigate("/dashboard")
-    } catch (error) {
-      setError("Failed to create an account. Please try again.")
-    } finally {
-      setLoading(false)
-    }
+  
+  if (password !== confirmPassword) {
+    return setError("Passwords do not match");
   }
+  
+  try {
+    setError("");
+    setLoading(true);
+    
+    
+    await signupRequest({ name, email, password, confirmPassword });
+    console.log("signup successfull!");
+
+
+    
+    // navigate("/dashboard");
+  } catch (error) {
+    console.error("Signup failed:", error);
+    setError("Failed to create an account. Please try again.");
+  } finally {
+    setLoading(false);
+  }
+};
+
+
 
   return (
     <div className="min-h-screen bg-gray-50">

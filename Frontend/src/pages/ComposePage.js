@@ -16,9 +16,7 @@ import {
 
 function ComposePage() {
   const { currentUser } = useAuth();
-  const [from, setFrom] = useState(currentUser?.email || "");
   const [to, setTo] = useState("");
-  const [subject, setSubject] = useState("");
   const [content, setContent] = useState("");
   const [showSchedule, setShowSchedule] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -31,7 +29,6 @@ function ComposePage() {
     setTimeout(() => {
       alert("Email sent successfully!");
       setTo("");
-      setSubject("");
       setContent("");
       setLoading(false);
     }, 1500);
@@ -76,17 +73,6 @@ function ComposePage() {
       <form onSubmit={handleSend} className="p-4">
         <div className="space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center">
-            <label className="w-20 text-gray-700 font-medium">From</label>
-            <input
-              type="email"
-              value={from}
-              onChange={(e) => setFrom(e.target.value)}
-              className="flex-1 p-2 border border-gray-300 rounded mt-1 sm:mt-0"
-              readOnly
-            />
-          </div>
-
-          <div className="flex flex-col sm:flex-row sm:items-center">
             <label className="w-20 text-gray-700 font-medium">To</label>
             <input
               type="email"
@@ -94,18 +80,6 @@ function ComposePage() {
               onChange={(e) => setTo(e.target.value)}
               className="flex-1 p-2 border border-gray-300 rounded mt-1 sm:mt-0"
               placeholder="recipient@example.com"
-              required
-            />
-          </div>
-
-          <div className="flex flex-col sm:flex-row sm:items-center">
-            <label className="w-20 text-gray-700 font-medium">Subject</label>
-            <input
-              type="text"
-              value={subject}
-              onChange={(e) => setSubject(e.target.value)}
-              className="flex-1 p-2 border border-gray-300 rounded mt-1 sm:mt-0"
-              placeholder="Email subject"
               required
             />
           </div>
