@@ -16,7 +16,13 @@ import {
 
 function ComposePage() {
   const { currentUser } = useAuth();
+<<<<<<< HEAD
   const [to, setTo] = useState("");
+=======
+  const [from, setFrom] = useState(currentUser?.email || "");
+  const [to, setTo] = useState("");
+  const [subject, setSubject] = useState("");
+>>>>>>> 726e9b00202ec18df2963e4b8ab50eb52a138389
   const [content, setContent] = useState("");
   const [showSchedule, setShowSchedule] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -29,6 +35,10 @@ function ComposePage() {
     setTimeout(() => {
       alert("Email sent successfully!");
       setTo("");
+<<<<<<< HEAD
+=======
+      setSubject("");
+>>>>>>> 726e9b00202ec18df2963e4b8ab50eb52a138389
       setContent("");
       setLoading(false);
     }, 1500);
@@ -73,6 +83,20 @@ function ComposePage() {
       <form onSubmit={handleSend} className="p-4">
         <div className="space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center">
+<<<<<<< HEAD
+=======
+            <label className="w-20 text-gray-700 font-medium">From</label>
+            <input
+              type="email"
+              value={from}
+              onChange={(e) => setFrom(e.target.value)}
+              className="flex-1 p-2 border border-gray-300 rounded mt-1 sm:mt-0"
+              readOnly
+            />
+          </div>
+
+          <div className="flex flex-col sm:flex-row sm:items-center">
+>>>>>>> 726e9b00202ec18df2963e4b8ab50eb52a138389
             <label className="w-20 text-gray-700 font-medium">To</label>
             <input
               type="email"
@@ -84,6 +108,21 @@ function ComposePage() {
             />
           </div>
 
+<<<<<<< HEAD
+=======
+          <div className="flex flex-col sm:flex-row sm:items-center">
+            <label className="w-20 text-gray-700 font-medium">Subject</label>
+            <input
+              type="text"
+              value={subject}
+              onChange={(e) => setSubject(e.target.value)}
+              className="flex-1 p-2 border border-gray-300 rounded mt-1 sm:mt-0"
+              placeholder="Email subject"
+              required
+            />
+          </div>
+
+>>>>>>> 726e9b00202ec18df2963e4b8ab50eb52a138389
           <div>
             <ReactQuill
               theme="snow"

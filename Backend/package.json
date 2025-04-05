@@ -9,15 +9,23 @@
     "dev": "nodemon --no-deprecation index.js"
   },
   "dependencies": {
+<<<<<<< HEAD
     "axios": "^0.21.1",
     "bcryptjs": "^3.0.2",
     "cookie-parser": "^1.4.7",
+=======
+    "ai-email-assistant": "file:",
+    "axios": "^0.21.1",
+>>>>>>> 726e9b00202ec18df2963e4b8ab50eb52a138389
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "google-auth-library": "^7.0.2",
     "googleapis": "^91.0.0",
+<<<<<<< HEAD
     "jsonwebtoken": "^9.0.2",
+=======
+>>>>>>> 726e9b00202ec18df2963e4b8ab50eb52a138389
     "mongoose": "^6.0.12"
   },
   "devDependencies": {

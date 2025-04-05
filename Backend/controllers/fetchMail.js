@@ -41,7 +41,11 @@ function extractBody(payload) {
   return "";
 }
 
+<<<<<<< HEAD
 export const listMessages = async (req, res) => { 
+=======
+export const listMessages = async (req, res) => {
+>>>>>>> 726e9b00202ec18df2963e4b8ab50eb52a138389
   try {
     const response = await gmail.users.messages.list({
       userId: "me",

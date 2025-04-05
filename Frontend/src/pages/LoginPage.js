@@ -15,6 +15,7 @@ function LoginPage() {
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
+<<<<<<< HEAD
     e.preventDefault();
 
     try {
@@ -49,6 +50,21 @@ function LoginPage() {
       setLoading(false);
     }
   };
+=======
+    e.preventDefault()
+
+    try {
+      setError("")
+      setLoading(true)
+      await login(email, password)
+      navigate("/dashboard")
+    } catch (error) {
+      setError("Failed to sign in. Please check your credentials.")
+    } finally {
+      setLoading(false)
+    }
+  }
+>>>>>>> 726e9b00202ec18df2963e4b8ab50eb52a138389
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -127,7 +143,21 @@ function LoginPage() {
             </div>
 
             <div className="flex items-center justify-between">
+<<<<<<< HEAD
               
+=======
+              <div className="flex items-center">
+                <input
+                  id="remember-me"
+                  name="remember-me"
+                  type="checkbox"
+                  className="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
+                />
+                <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
+                  Remember me
+                </label>
+              </div>
+>>>>>>> 726e9b00202ec18df2963e4b8ab50eb52a138389
 
               <div className="text-sm">
                 <a href="#" className="font-medium text-purple-600 hover:text-purple-500">

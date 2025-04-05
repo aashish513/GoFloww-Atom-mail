@@ -22,5 +22,9 @@ const emailSchema = mongoose.Schema(
 );
 
 const Email = mongoose.model("Email", emailSchema);
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> 726e9b00202ec18df2963e4b8ab50eb52a138389
 export default Email;
