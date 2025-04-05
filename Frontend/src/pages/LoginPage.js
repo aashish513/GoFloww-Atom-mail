@@ -15,7 +15,6 @@ function LoginPage() {
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
-<<<<<<< HEAD
     e.preventDefault();
 
     try {
@@ -50,21 +49,6 @@ function LoginPage() {
       setLoading(false);
     }
   };
-=======
-    e.preventDefault()
-
-    try {
-      setError("")
-      setLoading(true)
-      await login(email, password)
-      navigate("/dashboard")
-    } catch (error) {
-      setError("Failed to sign in. Please check your credentials.")
-    } finally {
-      setLoading(false)
-    }
-  }
->>>>>>> 726e9b00202ec18df2963e4b8ab50eb52a138389
 
   return (
     <div className="min-h-screen bg-gray-50">
