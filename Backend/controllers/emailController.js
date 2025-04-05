@@ -2,6 +2,8 @@
 import Email from "../models/Email.js";
 import { fetchEmails, sendEmail } from "../services/gmailService.js";
 import { generateAIReply } from "../services/geminiService.js";
+import Conversation from "../models/Conversation.js";
+
 
 export const getEmails = async (req, res) => {
   try {
@@ -36,3 +38,54 @@ export const replyToEmail = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const saveUserReply = async (req, res) => {
+  const { userId, replyContent } = req.body;
+
+  console.log("userId: ",userId);
+  try {
+    let conversation = await Conversation.findOne({ user: userId });
+
+    if (!conversation) {
+      // create if not exists
+      conversation = new Conversation({
+        user: userId,
+        userEditedReplies: [replyContent],
+      });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+    } else {
+      // push to existing
+      conversation.userEditedReplies.push(replyContent);
+    }
+
+    await conversation.save();
+    res.status(200).json({ message: "Reply saved successfully", conversation });
+  } catch (error) {
+    console.log("not working properly");
+    res.status(500).json({ message: error.message });
+  }
+};
+
+

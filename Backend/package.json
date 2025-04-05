@@ -9,6 +9,7 @@
     "dev": "nodemon --no-deprecation index.js"
   },
   "dependencies": {
+    "ai-email-assistant": "file:",
     "axios": "^0.21.1",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
