@@ -1,197 +1,3 @@
-<<<<<<< HEAD
-"use client";
-
-import { useState, useEffect } from "react";
-import {
-  Inbox,
-  Star,
-  Clock,
-  Send,
-  Trash,
-  AlertCircle,
-  Mail,
-} from "lucide-react";
-
-// Mock email data
-// const mockEmails = [
-//   {
-//     id: 1,
-//     from: "team@company.com",
-//     subject: "Welcome to MailFlow!",
-//     content:
-//       "Thank you for signing up for MailFlow. We hope you enjoy using our platform.",
-//     date: "2025-04-05T10:30:00",
-//     read: false,
-//     starred: true,
-//   },
-//   {
-//     id: 2,
-//     from: "notifications@service.com",
-//     subject: "Your account has been verified",
-//     content:
-//       "Your account has been successfully verified. You can now access all features.",
-//     date: "2025-04-04T15:45:00",
-//     read: true,
-//     starred: false,
-//   },
-//   {
-//     id: 3,
-//     from: "newsletter@tech.com",
-//     subject: "This Week in Tech: Latest Updates",
-//     content:
-//       "Check out the latest tech news and updates from around the world.",
-//     date: "2025-04-03T08:15:00",
-//     read: true,
-//     starred: false,
-//   },
-//   {
-//     id: 4,
-//     from: "team@company.com",
-//     subject: "Welcome to MailFlow!",
-//     content: "Let us know if you have any questions.",
-//     date: "2025-04-02T14:20:00",
-//     read: false,
-//     starred: false,
-//   },
-//   {
-//     id: 5,
-//     from: "marketing@store.com",
-//     subject: "Special Offer: 25% off all products",
-//     content: "For a limited time, enjoy 25% off all products in our store.",
-//     date: "2025-04-01T11:10:00",
-//     read: true,
-//     starred: true,
-//   },
-// ];
-
-function InboxPage() {
-  const [emails, setEmails] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [selectedThread, setSelectedThread] = useState(null);
-  const [activeTab, setActiveTab] = useState("inbox");
-  const [replyTo, setReplyTo] = useState(null);
-  const [offset, setOffset] = useState(0);
-  const limit = 1;
-
-  useEffect(() => {
-    const fetchEmails = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        if (!token) {
-          throw new Error("Token not found in localStorage");
-        }
-        console.log("token", token)
-        const response = await fetch(
-          `http://192.168.137.92:5001/api/email_threads?secret_key=${token}&offset=${offset}&limit=${limit}`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-
-        
-        if (!response.ok) {
-          throw new Error("Failed to fetch emails");
-        }
-        console.log("responce",response);
-
-
-        const data = await response.json();
-        console.log("data is ", data);
-        setEmails(data); 
-        console.log("ye hai final data", emails)
-        setOffset(offset + limit); 
-        setLoading(false);
-      } catch (error) {
-        console.error(error);
-        setError("Failed to load emails. Please try again later.");
-        setLoading(false);
-      }
-    };
-
-    fetchEmails();
-  }, []);
-
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", {
-      month: "short",
-      day: "numeric",
-    });
-  };
-
-  const handleReply = (email) => {
-    console.log("Replying to:", email.from);
-    // Do something with email.from or email.id etc.
-  };
-
- const groupEmails = () => {
-   const grouped = {};
-
-   for (const email of emails) {
-     const key = email.conversation_id;
-     if (!grouped[key]) grouped[key] = [];
-     grouped[key].push(email);
-   }
-
-   return Object.entries(grouped)
-     .map(([conversation_id, threadEmails]) => {
-       const sortedEmails = threadEmails.sort(
-         (a, b) => new Date(b.date) - new Date(a.date)
-       );
-       return {
-         threadId: conversation_id,
-         from: sortedEmails[0].from,
-         subject: sortedEmails[0].subject,
-         emails: sortedEmails,
-         unreadCount: sortedEmails.filter((e) => !e.read).length,
-         starred: sortedEmails.some((e) => e.starred),
-         latestDate: sortedEmails[0].date,
-       };
-     })
-     .sort((a, b) => new Date(b.latestDate) - new Date(a.latestDate));
- };
-
-
-  const handleThreadClick = (thread) => {
-    setSelectedThread(thread);
-    const updatedEmails = emails.map((e) =>
-      thread.emails.find((te) => te.id === e.id) ? { ...e, read: true } : e
-    );
-    setEmails(updatedEmails);
-    setReplyTo(thread.emails[0]); // set the first email in thread for reply
-  };
-
-  const toggleStar = (threadId, e) => {
-    e.stopPropagation();
-    const updatedEmails = emails.map((email) => {
-      const key = email.conversation_id;
-
-      if (key === threadId) {
-        return { ...email, starred: !email.starred };
-      }
-      return email;
-    });
-    setEmails(updatedEmails);
-  };
-
-  const filteredThreads = () => {
-    const threads = groupEmails();
-    switch (activeTab) {
-      case "starred":
-        return threads.filter((thread) => thread.starred);
-      case "sent":
-      case "drafts":
-      case "trash":
-        return [];
-      default:
-        return threads;
-    }
-  };
-=======
 "use client"
 
 import { useState, useEffect } from "react"
@@ -303,7 +109,6 @@ function InboxPage() {
         return emails
     }
   }
->>>>>>> 726e9b00202ec18df2963e4b8ab50eb52a138389
 
   return (
     <div className="h-[calc(100vh-2rem)] flex flex-col">
@@ -442,7 +247,6 @@ function InboxPage() {
                 <AlertCircle size={18} className="mr-2" />
                 {error}
               </div>
-<<<<<<< HEAD
             ) : filteredThreads().length === 0 ? (
               <div className="p-4 text-gray-500 text-center">
                 No emails found
@@ -463,36 +267,16 @@ function InboxPage() {
                   <div className="flex items-center">
                     <button
                       onClick={(e) => toggleStar(thread.threadId, e)}
-=======
-            ) : filteredEmails().length === 0 ? (
-              <div className="p-4 text-gray-500 text-center">No emails found</div>
-            ) : (
-              filteredEmails().map((email) => (
-                <div
-                  key={email.id}
-                  onClick={() => handleEmailClick(email)}
-                  className={`email-card ${!email.read ? "email-card-unread" : ""} ${selectedEmail?.id === email.id ? "bg-purple-50" : ""}`}
-                >
-                  <div className="flex items-center">
-                    <button
-                      onClick={(e) => toggleStar(email.id, e)}
->>>>>>> 726e9b00202ec18df2963e4b8ab50eb52a138389
                       className="mr-2 text-gray-400 hover:text-yellow-400"
                     >
                       <Star
                         size={18}
-<<<<<<< HEAD
                         fill={thread.starred ? "currentColor" : "none"}
                         className={thread.starred ? "text-yellow-400" : ""}
-=======
-                        fill={email.starred ? "currentColor" : "none"}
-                        className={email.starred ? "text-yellow-400" : ""}
->>>>>>> 726e9b00202ec18df2963e4b8ab50eb52a138389
                       />
                     </button>
                     <div className="flex-1 min-w-0">
                       <div className="flex justify-between">
-<<<<<<< HEAD
                         <p className="truncate">{thread.from}</p>
                         <p className="text-xs text-gray-500">
                           {formatDate(thread.latestDate)}
@@ -502,13 +286,6 @@ function InboxPage() {
                       <p className="text-sm text-gray-500 truncate">
                         {thread.emails[0].content}
                       </p>
-=======
-                        <p className="truncate">{email.from}</p>
-                        <p className="text-xs text-gray-500">{formatDate(email.date)}</p>
-                      </div>
-                      <p className="truncate">{email.subject}</p>
-                      <p className="text-sm text-gray-500 truncate">{email.content}</p>
->>>>>>> 726e9b00202ec18df2963e4b8ab50eb52a138389
                     </div>
                   </div>
                 </div>
@@ -516,7 +293,6 @@ function InboxPage() {
             )}
           </div>
 
-<<<<<<< HEAD
           {/* Email Thread View */}
           <div className="flex-1 p-4 overflow-y-auto">
             {selectedThread ? (
@@ -546,42 +322,6 @@ function InboxPage() {
                 >
                   Reply
                 </button>
-=======
-          {/* Email content */}
-          <div className="flex-1 p-4 overflow-y-auto">
-            {selectedEmail ? (
-              <div>
-                <div className="mb-4">
-                  <h2 className="text-xl font-bold">{selectedEmail.subject}</h2>
-                  <div className="flex items-center justify-between mt-2">
-                    <div>
-                      <p className="text-sm">From: {selectedEmail.from}</p>
-                      <p className="text-xs text-gray-500">{new Date(selectedEmail.date).toLocaleString()}</p>
-                    </div>
-                    <div className="flex space-x-2">
-                      <button className="p-1 rounded hover:bg-gray-100">
-                        <Archive size={18} />
-                      </button>
-                      <button className="p-1 rounded hover:bg-gray-100">
-                        <Trash size={18} />
-                      </button>
-                      <button
-                        className="p-1 rounded hover:bg-gray-100"
-                        onClick={(e) => toggleStar(selectedEmail.id, e)}
-                      >
-                        <Star
-                          size={18}
-                          fill={selectedEmail.starred ? "currentColor" : "none"}
-                          className={selectedEmail.starred ? "text-yellow-400" : ""}
-                        />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <div className="border-t border-gray-200 pt-4">
-                  <p>{selectedEmail.content}</p>
-                </div>
->>>>>>> 726e9b00202ec18df2963e4b8ab50eb52a138389
               </div>
             ) : (
               <div className="flex flex-col items-center justify-center h-full text-gray-500">
@@ -593,15 +333,7 @@ function InboxPage() {
         </div>
       </div>
     </div>
-<<<<<<< HEAD
   );
 }
 
 export default InboxPage;
-=======
-  )
-}
-
-export default InboxPage
-
->>>>>>> 726e9b00202ec18df2963e4b8ab50eb52a138389
